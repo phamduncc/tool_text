@@ -11,6 +11,7 @@ import 'line_breaks_screen.dart';
 import 'replacer_screen.dart';
 import 'alternator_screen.dart';
 import 'ocr_screen.dart';
+import '../l10n/app_localizations.dart';
 
 class ToolItem {
   final String title;
@@ -36,92 +37,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  late final List<ToolItem> tools;
   late AnimationController _staggerController;
 
   @override
   void initState() {
     super.initState();
-    tools = [
-      ToolItem(
-        title: 'Character Counter',
-        subtitle: 'Count chars, words & lines',
-        icon: Icons.pin_rounded,
-        screen: const CounterScreen(),
-        gradient: AppTheme.toolGradients[0],
-      ),
-      ToolItem(
-        title: 'Case Converter',
-        subtitle: 'Upper, lower & more',
-        icon: Icons.text_fields_rounded,
-        screen: const ConverterScreen(),
-        gradient: AppTheme.toolGradients[1],
-      ),
-      ToolItem(
-        title: 'Remove Spaces',
-        subtitle: 'Clean extra whitespace',
-        icon: Icons.space_bar_rounded,
-        screen: const SpacesScreen(),
-        gradient: AppTheme.toolGradients[2],
-      ),
-      ToolItem(
-        title: 'Reverse Text',
-        subtitle: 'Mirror your text',
-        icon: Icons.swap_horiz_rounded,
-        screen: const ReverseScreen(),
-        gradient: AppTheme.toolGradients[3],
-      ),
-      ToolItem(
-        title: 'Remove Duplicates',
-        subtitle: 'Delete repeated lines',
-        icon: Icons.filter_alt_rounded,
-        screen: const DuplicatesScreen(),
-        gradient: AppTheme.toolGradients[4],
-      ),
-      ToolItem(
-        title: 'Sort Text',
-        subtitle: 'Sort lines A→Z or Z→A',
-        icon: Icons.sort_by_alpha_rounded,
-        screen: const SortScreen(),
-        gradient: AppTheme.toolGradients[5],
-      ),
-      ToolItem(
-        title: 'Word Counter',
-        subtitle: 'Words, paragraphs & time',
-        icon: Icons.analytics_rounded,
-        screen: const WordCounterScreen(),
-        gradient: AppTheme.toolGradients[6],
-      ),
-      ToolItem(
-        title: 'Remove Line Breaks',
-        subtitle: 'Join lines together',
-        icon: Icons.wrap_text_rounded,
-        screen: const LineBreaksScreen(),
-        gradient: AppTheme.toolGradients[7],
-      ),
-      ToolItem(
-        title: 'Text Replacer',
-        subtitle: 'Find & replace text',
-        icon: Icons.find_replace_rounded,
-        screen: const ReplacerScreen(),
-        gradient: AppTheme.toolGradients[8],
-      ),
-      ToolItem(
-        title: 'Case Alternator',
-        subtitle: 'aLtErNaTiNg CaSe',
-        icon: Icons.format_color_text_rounded,
-        screen: const AlternatorScreen(),
-        gradient: AppTheme.toolGradients[9],
-      ),
-      ToolItem(
-        title: 'Image to Text',
-        subtitle: 'Extract text from photos',
-        icon: Icons.document_scanner_rounded,
-        screen: const OcrScreen(),
-        gradient: AppTheme.toolGradients[10],
-      ),
-    ];
-
     _staggerController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
@@ -135,8 +55,92 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  List<ToolItem> _getTools(AppLocalizations l10n) {
+    return [
+      ToolItem(
+        title: l10n.translate('char_counter'),
+        subtitle: l10n.translate('char_subtitle'),
+        icon: Icons.pin_rounded,
+        screen: const CounterScreen(),
+        gradient: AppTheme.toolGradients[0],
+      ),
+      ToolItem(
+        title: l10n.translate('case_converter'),
+        subtitle: l10n.translate('case_subtitle'),
+        icon: Icons.text_fields_rounded,
+        screen: const ConverterScreen(),
+        gradient: AppTheme.toolGradients[1],
+      ),
+      ToolItem(
+        title: l10n.translate('remove_spaces'),
+        subtitle: l10n.translate('remove_spaces_sub'),
+        icon: Icons.space_bar_rounded,
+        screen: const SpacesScreen(),
+        gradient: AppTheme.toolGradients[2],
+      ),
+      ToolItem(
+        title: l10n.translate('reverse_text'),
+        subtitle: l10n.translate('reverse_subtitle'),
+        icon: Icons.swap_horiz_rounded,
+        screen: const ReverseScreen(),
+        gradient: AppTheme.toolGradients[3],
+      ),
+      ToolItem(
+        title: l10n.translate('remove_duplicates'),
+        subtitle: l10n.translate('remove_duplicates_sub'),
+        icon: Icons.filter_alt_rounded,
+        screen: const DuplicatesScreen(),
+        gradient: AppTheme.toolGradients[4],
+      ),
+      ToolItem(
+        title: l10n.translate('sort_text'),
+        subtitle: l10n.translate('sort_subtitle'),
+        icon: Icons.sort_by_alpha_rounded,
+        screen: const SortScreen(),
+        gradient: AppTheme.toolGradients[5],
+      ),
+      ToolItem(
+        title: l10n.translate('word_counter'),
+        subtitle: l10n.translate('word_sub'),
+        icon: Icons.analytics_rounded,
+        screen: const WordCounterScreen(),
+        gradient: AppTheme.toolGradients[6],
+      ),
+      ToolItem(
+        title: l10n.translate('remove_lines'),
+        subtitle: l10n.translate('remove_lines_sub'),
+        icon: Icons.wrap_text_rounded,
+        screen: const LineBreaksScreen(),
+        gradient: AppTheme.toolGradients[7],
+      ),
+      ToolItem(
+        title: l10n.translate('text_replacer'),
+        subtitle: l10n.translate('text_replacer_sub'),
+        icon: Icons.find_replace_rounded,
+        screen: const ReplacerScreen(),
+        gradient: AppTheme.toolGradients[8],
+      ),
+      ToolItem(
+        title: l10n.translate('case_alternator'),
+        subtitle: l10n.translate('case_alternator_sub'),
+        icon: Icons.format_color_text_rounded,
+        screen: const AlternatorScreen(),
+        gradient: AppTheme.toolGradients[9],
+      ),
+      ToolItem(
+        title: l10n.translate('extract_text'),
+        subtitle: l10n.translate('extract_subtitle'),
+        icon: Icons.document_scanner_rounded,
+        screen: const OcrScreen(),
+        gradient: AppTheme.toolGradients[10],
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final tools = _getTools(l10n);
     return Scaffold(
       body: SafeArea(
         child: Padding(

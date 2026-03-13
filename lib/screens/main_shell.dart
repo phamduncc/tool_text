@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import 'home_screen.dart';
 import 'settings_screen.dart';
+import '../l10n/app_localizations.dart';
 
 class MainShell extends StatefulWidget {
   const MainShell({super.key});
@@ -20,6 +21,8 @@ class _MainShellState extends State<MainShell> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,
@@ -27,7 +30,7 @@ class _MainShellState extends State<MainShell> {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: AppTheme.surfaceDark,
+          color: Theme.of(context).colorScheme.surface,
           border: Border(
             top: BorderSide(
               color: AppTheme.primary.withValues(alpha: 0.08),
@@ -44,14 +47,14 @@ class _MainShellState extends State<MainShell> {
               children: [
                 _NavItem(
                   icon: Icons.home_rounded,
-                  label: 'Home',
+                  label: l10n.translate('home'),
                   isSelected: _currentIndex == 0,
                   onTap: () => setState(() => _currentIndex = 0),
                   gradient: AppTheme.primaryGradient,
                 ),
                 _NavItem(
                   icon: Icons.settings_rounded,
-                  label: 'Settings',
+                  label: l10n.translate('settings'),
                   isSelected: _currentIndex == 1,
                   onTap: () => setState(() => _currentIndex = 1),
                   gradient: const LinearGradient(

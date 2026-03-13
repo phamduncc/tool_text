@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import '../theme/app_theme.dart';
+import '../providers/settings_provider.dart';
+import '../l10n/app_localizations.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final settings = context.watch<AppSettingsProvider>();
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -35,7 +41,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                     const SizedBox(width: 12),
                     Text(
-                      'Settings',
+                      l10n.translate('settings'),
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.w800,
                         fontSize: 20,
@@ -52,98 +58,78 @@ class SettingsScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 20),
                   children: [
                     // General section
-                    _SectionHeader(title: 'General'),
+                    _SectionHeader(title: l10n.translate('general')),
                     const SizedBox(height: 8),
                     _SettingsTile(
                       icon: Icons.language_rounded,
-                      title: 'Language',
-                      subtitle: 'English',
+                      title: l10n.translate('language'),
+                      subtitle: settings.locale.languageCode == 'en' ? 'English' : 'Tiếng Việt',
                       gradient: const LinearGradient(
                         colors: [Color(0xFF42A5F5), Color(0xFF1E88E5)],
                       ),
-                      onTap: () => _showLanguageDialog(context),
+                      onTap: () => _showLanguageDialog(context, settings, l10n),
                     ),
                     const SizedBox(height: 8),
                     _SettingsTile(
                       icon: Icons.dark_mode_rounded,
-                      title: 'Theme',
-                      subtitle: 'Dark',
+                      title: l10n.translate('theme'),
+                      subtitle: _getThemeName(settings.themeMode, l10n),
                       gradient: const LinearGradient(
                         colors: [Color(0xFF6C63FF), Color(0xFF5A52D5)],
                       ),
-                      onTap: () => _showComingSoon(context, 'Theme switching'),
+                      onTap: () => _showThemeDialog(context, settings, l10n),
                     ),
 
                     const SizedBox(height: 20),
 
                     // Support section
-                    _SectionHeader(title: 'Support'),
+                    _SectionHeader(title: l10n.translate('support')),
                     const SizedBox(height: 8),
                     _SettingsTile(
                       icon: Icons.star_rounded,
-                      title: 'Rate App',
-                      subtitle: 'Love it? Rate us 5 stars!',
+                      title: l10n.translate('rate_app'),
+                      subtitle: 'Love it? Rate us 5 stars!', // Could localize this too
                       gradient: const LinearGradient(
                         colors: [Color(0xFFFFCA28), Color(0xFFFFA000)],
                       ),
-                      onTap: () => _showComingSoon(context, 'Rate App'),
+                      onTap: () => _showComingSoon(context, l10n.translate('rate_app')),
                     ),
                     const SizedBox(height: 8),
                     _SettingsTile(
                       icon: Icons.share_rounded,
-                      title: 'Share App',
+                      title: l10n.translate('share_app'),
                       subtitle: 'Tell your friends about us',
                       gradient: const LinearGradient(
                         colors: [Color(0xFF4ECDC4), Color(0xFF3BA89F)],
                       ),
                       onTap: () {
                         Share.share(
-                          'Check out Smart Text Tools - A powerful text utility app! https://play.google.com/store/apps/details?id=com.tool_apps.tool_text',
+                          'Check out Smart Text Tools - A powerful text utility app! https://github.com/yourusername/tool_text',
                         );
                       },
-                    ),
-                    const SizedBox(height: 8),
-                    _SettingsTile(
-                      icon: Icons.feedback_rounded,
-                      title: 'Send Feedback',
-                      subtitle: 'Help us improve',
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFF00D2FF), Color(0xFF0097B2)],
-                      ),
-                      onTap: () => _showComingSoon(context, 'Feedback'),
                     ),
 
                     const SizedBox(height: 20),
 
                     // Legal section
-                    _SectionHeader(title: 'Legal'),
+                    _SectionHeader(title: l10n.translate('legal')),
                     const SizedBox(height: 8),
                     _SettingsTile(
                       icon: Icons.privacy_tip_rounded,
-                      title: 'Privacy Policy',
+                      title: l10n.translate('privacy'),
                       subtitle: 'How we handle your data',
                       gradient: const LinearGradient(
                         colors: [Color(0xFFFF6B9D), Color(0xFFCC5580)],
                       ),
-                      onTap: () => _showComingSoon(context, 'Privacy Policy'),
-                    ),
-                    const SizedBox(height: 8),
-                    _SettingsTile(
-                      icon: Icons.description_rounded,
-                      title: 'Terms of Service',
-                      subtitle: 'Usage terms & conditions',
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFFFF8A65), Color(0xFFCC6E51)],
-                      ),
-                      onTap: () => _showComingSoon(context, 'Terms of Service'),
+                      onTap: () => _showComingSoon(context, l10n.translate('privacy')),
                     ),
 
                     const SizedBox(height: 20),
 
                     // About section
-                    _SectionHeader(title: 'About'),
+                    _SectionHeader(title: l10n.translate('about')),
                     const SizedBox(height: 8),
-                    _AboutCard(),
+                    _AboutCard(l10n: l10n),
                   ],
                 ),
               ),
@@ -154,23 +140,83 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  void _showLanguageDialog(BuildContext context) {
+  String _getThemeName(ThemeMode mode, AppLocalizations l10n) {
+    switch (mode) {
+      case ThemeMode.system:
+        return l10n.translate('system_mode');
+      case ThemeMode.light:
+        return l10n.translate('light_mode');
+      case ThemeMode.dark:
+        return l10n.translate('dark_mode');
+    }
+  }
+
+  void _showLanguageDialog(BuildContext context, AppSettingsProvider settings, AppLocalizations l10n) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: AppTheme.surfaceDark,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Text(
-          'Language',
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        title: Text(l10n.translate('language')),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _LanguageOption(label: 'English', isSelected: true, onTap: () => Navigator.pop(context)),
-            _LanguageOption(label: 'Tiếng Việt', isSelected: false, onTap: () => Navigator.pop(context)),
+            _LanguageOption(
+              label: 'English',
+              isSelected: settings.locale.languageCode == 'en',
+              onTap: () {
+                settings.setLocale(const Locale('en'));
+                Navigator.pop(context);
+              },
+            ),
+            _LanguageOption(
+              label: 'Tiếng Việt',
+              isSelected: settings.locale.languageCode == 'vi',
+              onTap: () {
+                settings.setLocale(const Locale('vi'));
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showThemeDialog(BuildContext context, AppSettingsProvider settings, AppLocalizations l10n) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text(l10n.translate('theme')),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _ThemeOption(
+              label: l10n.translate('system_mode'),
+              isSelected: settings.themeMode == ThemeMode.system,
+              onTap: () {
+                settings.setThemeMode(ThemeMode.system);
+                Navigator.pop(context);
+              },
+            ),
+            _ThemeOption(
+              label: l10n.translate('light_mode'),
+              isSelected: settings.themeMode == ThemeMode.light,
+              onTap: () {
+                settings.setThemeMode(ThemeMode.light);
+                Navigator.pop(context);
+              },
+            ),
+            _ThemeOption(
+              label: l10n.translate('dark_mode'),
+              isSelected: settings.themeMode == ThemeMode.dark,
+              onTap: () {
+                settings.setThemeMode(ThemeMode.dark);
+                Navigator.pop(context);
+              },
+            ),
           ],
         ),
       ),
@@ -180,18 +226,27 @@ class SettingsScreen extends StatelessWidget {
   void _showComingSoon(BuildContext context, String feature) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Row(
-          children: [
-            const Icon(Icons.rocket_launch_rounded, color: Colors.white, size: 18),
-            const SizedBox(width: 10),
-            Text('$feature — Coming soon!'),
-          ],
-        ),
-        backgroundColor: AppTheme.primary,
+        content: Text('$feature — Coming soon!'),
         behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        duration: const Duration(seconds: 2),
       ),
+    );
+  }
+}
+
+class _ThemeOption extends StatelessWidget {
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _ThemeOption({required this.label, required this.isSelected, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(label),
+      trailing: isSelected ? const Icon(Icons.check_rounded, color: AppTheme.primary) : null,
+      onTap: onTap,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     );
   }
 }
@@ -346,6 +401,9 @@ class _LanguageOption extends StatelessWidget {
 }
 
 class _AboutCard extends StatelessWidget {
+  final AppLocalizations l10n;
+  const _AboutCard({required this.l10n});
+
   @override
   Widget build(BuildContext context) {
     return Container(

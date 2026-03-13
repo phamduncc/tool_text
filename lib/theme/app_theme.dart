@@ -9,32 +9,18 @@ class AppTheme {
 
   // Accent colors
   static const Color accent = Color(0xFF00D2FF);
+  // ignore: unused_field
   static const Color accentSecondary = Color(0xFFFF6B9D);
 
-  // Background colors
+  // Background colors - Dark
   static const Color backgroundDark = Color(0xFF0F0E17);
   static const Color surfaceDark = Color(0xFF1A1A2E);
   static const Color cardDark = Color(0xFF16213E);
-
-  // Text colors
   static const Color textPrimary = Color(0xFFF5F5F5);
   static const Color textSecondary = Color(0xFFB0B0C3);
   static const Color textMuted = Color(0xFF6B6B80);
 
-  // Gradient
-  static const LinearGradient primaryGradient = LinearGradient(
-    colors: [Color(0xFF6C63FF), Color(0xFF00D2FF)],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-  );
-
-  static const LinearGradient cardGradient = LinearGradient(
-    colors: [Color(0xFF1A1A2E), Color(0xFF16213E)],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-  );
-
-  // Surface colors for light mode
+  // Surface colors - Light
   static const Color backgroundLight = Color(0xFFF8F9FA);
   static const Color surfaceLight = Color(0xFFFFFFFF);
   static const Color cardLight = Color(0xFFFFFFFF);
@@ -42,7 +28,7 @@ class AppTheme {
   static const Color textSecondaryLight = Color(0xFF4A4A4A);
   static const Color textMutedLight = Color(0xFF8E8E93);
 
-  // Tool card gradients - unique for each tool
+  // Tool card gradients
   static const List<LinearGradient> toolGradients = [
     LinearGradient(colors: [Color(0xFF6C63FF), Color(0xFF5A52D5)]),
     LinearGradient(colors: [Color(0xFF00D2FF), Color(0xFF0097B2)]),
@@ -120,7 +106,7 @@ class AppTheme {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
-        side: BorderSide(color: Colors.grey.withOpacity(0.1)),
+        side: BorderSide(color: Colors.grey.withValues(alpha: 0.1)),
       ),
     ),
   );
@@ -169,45 +155,20 @@ class AppTheme {
     appBarTheme: AppBarTheme(
       backgroundColor: backgroundDark,
       elevation: 0,
-        fontWeight: FontWeight.w700,
-        color: textPrimary,
-      ),
+      centerTitle: true,
       iconTheme: const IconThemeData(color: textPrimary),
+      titleTextStyle: GoogleFonts.outfit(
+        color: textPrimary,
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+      ),
     ),
     cardTheme: CardThemeData(
-      color: surfaceDark,
+      color: cardDark,
       elevation: 0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-    ),
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: cardDark,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: primary, width: 1.5),
-      ),
-      hintStyle: GoogleFonts.inter(color: textMuted, fontSize: 14),
-      contentPadding: const EdgeInsets.all(16),
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: primary,
-        foregroundColor: Colors.white,
-        elevation: 0,
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        textStyle: GoogleFonts.inter(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-        ),
+        borderRadius: BorderRadius.circular(20),
+        side: BorderSide(color: primary.withValues(alpha: 0.1)),
       ),
     ),
   );
