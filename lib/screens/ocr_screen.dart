@@ -127,7 +127,7 @@ class _OcrScreenState extends State<OcrScreen> with SingleTickerProviderStateMix
           icon: Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: AppTheme.surfaceDark,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(10),
             ),
             child: const Icon(Icons.arrow_back_ios_new_rounded, size: 18),
@@ -276,7 +276,7 @@ class _OcrScreenState extends State<OcrScreen> with SingleTickerProviderStateMix
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 48),
                   decoration: BoxDecoration(
-                    color: AppTheme.surfaceDark,
+                    color: Theme.of(context).cardTheme.color,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
                       color: AppTheme.primary.withValues(alpha: 0.1),
@@ -287,7 +287,7 @@ class _OcrScreenState extends State<OcrScreen> with SingleTickerProviderStateMix
                       Container(
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: AppTheme.cardDark,
+                          color: Theme.of(context).cardTheme.color,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Icon(
@@ -353,7 +353,7 @@ class _OcrScreenState extends State<OcrScreen> with SingleTickerProviderStateMix
                   constraints: const BoxConstraints(minHeight: 120),
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: AppTheme.cardDark,
+                    color: Theme.of(context).cardTheme.color,
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
                       color: _extractedText.isNotEmpty
@@ -444,7 +444,7 @@ class _SourceButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 20),
         decoration: BoxDecoration(
-          color: AppTheme.surfaceDark,
+          color: Theme.of(context).cardTheme.color,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
             color: gradient.colors.first.withValues(alpha: 0.2),
