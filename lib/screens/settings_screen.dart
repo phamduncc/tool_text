@@ -88,7 +88,7 @@ class SettingsScreen extends StatelessWidget {
                     _SettingsTile(
                       icon: Icons.star_rounded,
                       title: l10n.translate('rate_app'),
-                      subtitle: 'Love it? Rate us 5 stars!', // Could localize this too
+                      subtitle: 'Love it? Rate us 5 stars!',
                       gradient: const LinearGradient(
                         colors: [Color(0xFFFFCA28), Color(0xFFFFA000)],
                       ),
@@ -296,7 +296,7 @@ class _SettingsTile extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
-          color: AppTheme.surfaceDark,
+          color: Theme.of(context).cardTheme.color,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
             color: gradient.colors.first.withValues(alpha: 0.1),
@@ -368,6 +368,7 @@ class _LanguageOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -375,19 +376,19 @@ class _LanguageOption extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         margin: const EdgeInsets.only(bottom: 8),
         decoration: BoxDecoration(
-          color: isSelected ? AppTheme.primary.withValues(alpha: 0.1) : AppTheme.cardDark,
+          color: isSelected ? AppTheme.primary.withValues(alpha: 0.1) : theme.colorScheme.surface,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? AppTheme.primary.withValues(alpha: 0.4) : Colors.transparent,
+            color: isSelected ? AppTheme.primary.withValues(alpha: 0.4) : theme.dividerColor.withValues(alpha: 0.1),
           ),
         ),
-        child: Row(
+          child: Row(
           children: [
             Text(
               label,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                color: isSelected ? AppTheme.primary : AppTheme.textSecondary,
+                color: isSelected ? AppTheme.primary : null,
               ),
             ),
             const Spacer(),
@@ -406,10 +407,11 @@ class _AboutCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: AppTheme.surfaceDark,
+        color: theme.cardTheme.color,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
           color: AppTheme.primary.withValues(alpha: 0.1),
@@ -440,14 +442,14 @@ class _AboutCard extends StatelessWidget {
           const SizedBox(height: 14),
           Text(
             'Smart Text Tools',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w700,
             ),
           ),
           const SizedBox(height: 4),
           Text(
             'Version 1.0.0',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            style: theme.textTheme.bodySmall?.copyWith(
               color: AppTheme.textMuted,
             ),
           ),
@@ -455,14 +457,13 @@ class _AboutCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
             decoration: BoxDecoration(
-              color: AppTheme.cardDark,
+              color: theme.colorScheme.surface.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Text(
               'Your all-in-one text utility.\nPowered by Flutter 💙',
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: AppTheme.textSecondary,
+              style: theme.textTheme.bodySmall?.copyWith(
                 height: 1.5,
               ),
             ),

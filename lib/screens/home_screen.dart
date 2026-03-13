@@ -141,6 +141,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final tools = _getTools(l10n);
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -170,14 +171,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Smart Text Tools',
+                          l10n.translate('app_title'),
                           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.w800,
                             fontSize: 20,
                           ),
                         ),
                         Text(
-                          '${tools.length} tools available',
+                          '${tools.length} ${l10n.translate('tools_available')}',
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: AppTheme.textMuted,
                             fontSize: 12,
@@ -272,7 +273,7 @@ class _ToolTile extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
           decoration: BoxDecoration(
-            color: AppTheme.surfaceDark,
+            color: Theme.of(context).cardTheme.color,
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
               color: tool.gradient.colors.first.withValues(alpha: 0.12),

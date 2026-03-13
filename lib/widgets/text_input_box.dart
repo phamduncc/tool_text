@@ -20,6 +20,7 @@ class TextInputBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -28,8 +29,7 @@ class TextInputBox extends StatelessWidget {
           children: [
             Text(
               'Input Text',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AppTheme.textSecondary,
+              style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -63,6 +63,7 @@ class TextInputBox extends StatelessWidget {
         const SizedBox(height: 10),
         Container(
           decoration: BoxDecoration(
+            color: theme.cardTheme.color,
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
               color: AppTheme.primary.withValues(alpha: 0.15),
@@ -73,8 +74,7 @@ class TextInputBox extends StatelessWidget {
             controller: controller,
             maxLines: maxLines,
             onChanged: onChanged,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: AppTheme.textPrimary,
+            style: theme.textTheme.bodyLarge?.copyWith(
               height: 1.6,
             ),
             decoration: InputDecoration(
@@ -108,13 +108,14 @@ class _ActionChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(20),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
-          color: AppTheme.cardDark,
+          color: theme.cardTheme.color,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: AppTheme.primary.withValues(alpha: 0.2),
@@ -127,7 +128,7 @@ class _ActionChip extends StatelessWidget {
             const SizedBox(width: 4),
             Text(
               label,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              style: theme.textTheme.bodySmall?.copyWith(
                 color: AppTheme.primary,
                 fontWeight: FontWeight.w500,
               ),

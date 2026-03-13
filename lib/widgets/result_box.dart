@@ -34,6 +34,7 @@ class _ResultBoxState extends State<ResultBox> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -42,8 +43,7 @@ class _ResultBoxState extends State<ResultBox> with SingleTickerProviderStateMix
           children: [
             Text(
               widget.label,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AppTheme.textSecondary,
+              style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -60,7 +60,7 @@ class _ResultBoxState extends State<ResultBox> with SingleTickerProviderStateMix
                   _ActionButton(
                     icon: Icons.share_rounded,
                     label: 'Share',
-                    color: AppTheme.accentSecondary,
+                    color: const Color(0xFFFF6B9D),
                     onTap: _shareText,
                   ),
                 ],
@@ -74,7 +74,7 @@ class _ResultBoxState extends State<ResultBox> with SingleTickerProviderStateMix
           constraints: const BoxConstraints(minHeight: 120),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppTheme.cardDark,
+            color: theme.cardTheme.color,
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
               color: widget.result.isNotEmpty
@@ -90,14 +90,14 @@ class _ResultBoxState extends State<ResultBox> with SingleTickerProviderStateMix
                     children: [
                       Icon(
                         Icons.text_snippet_outlined,
-                        color: AppTheme.textMuted.withValues(alpha: 0.5),
+                        color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.5),
                         size: 32,
                       ),
                       const SizedBox(height: 8),
                       Text(
                         'Result will appear here',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppTheme.textMuted,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.textTheme.bodySmall?.color,
                         ),
                       ),
                     ],
@@ -105,8 +105,7 @@ class _ResultBoxState extends State<ResultBox> with SingleTickerProviderStateMix
                 )
               : SelectableText(
                   widget.result,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: AppTheme.textPrimary,
+                  style: theme.textTheme.bodyLarge?.copyWith(
                     height: 1.6,
                   ),
                 ),
